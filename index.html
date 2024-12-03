@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create by netoy</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      color: #eeff00;
+      background: url('https://media.discordapp.net/attachments/1290359227210006579/1313339086836338738/88B79A9A-8D9E-41FB-896B-193731EA5ADC.jpg') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .sinoname {
+      z-index: 2;
+      text-align: center;
+      animation: flicker 2s infinite;
+      padding: 10px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      text-shadow: 0 0 5px #eeff00, 0 0 10px #eeff00, 0 0 20px #eeff00, 0 0 40px rgb(255, 0, 0), 0 0 80px rgb(255, 0, 0);
+      margin: 0;
+    }
+    .social-icons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .social-icons a {
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .social-icons a:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .social-icons img {
+      width: 40px;
+      height: 40px;
+    }
+    button {
+      position: absolute;
+      z-index: 10;
+      width: 100%;
+      max-width: 99999px;
+      height: 99999px;
+      background-color: #eeff00;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: rgb(255, 0, 0);
+      color: #fff;
+    }
+    pre {
+      font-size: 1rem;
+      margin: 0;
+      color: #ffffff;
+      text-shadow: 0 0 5px #eeff00, 0 0 10px #eeff00, 0 0 20px #eeff00, 0 0 40px rgb(255, 0, 0);
+    }
+    #youtube-body {
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 16/9;
+      z-index: 2;
+      margin-top: 20px;
+    }
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      button {
+        font-size: 1.2rem;
+      }
+      pre {
+        font-size: 1.2rem;
+      }
+      .social-icons img {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="startButton">Click me my heart</button>
+  <canvas id="matrix"></canvas>
+  <div class="sinoname">
+    <h1>julio "N3toy" loves allyssa "gabby"</h1>
+    <div id="youtube-body"></div>
+    <audio id="background-audio" src="https://raw.githubusercontent.com/boleanz/boleanz/main/tanginanetoy.mp3" loop></audio>
+    <pre id="iplookz" class="iplookz">Fetching...</pre>
+    <div class="social-icons">
+      <a href="https://discord.gg/kupalinogang" target="_blank" title="Kupalino Gang">
+        <img src="https://img.icons8.com/fluency/48/000000/discord-new-logo.png" alt="Discord">
+      </a>
+      <a href="https://www.tiktok.com/@user0ri5bta4ia" target="_blank" title="My TikTok">
+        <img src="https://img.icons8.com/fluency/48/000000/tiktok.png" alt="TikTok">
+      </a>
+    </div>
+  </div>
+  <script>
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("youtube-body", {
+        videoId: "mnBDfa5qcXQ",
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: "mnBDfa5qcXQ",
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          mute: 1,
+        },
+      });
+    }
+    const startButton = document.getElementById("startButton");
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    const audio = document.getElementById("background-audio");
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    const customText = "I LOVE YOU ALLYSSA ♥";
+    const fontSize = 20;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `${fontSize}px monospace`;
+      drops.forEach((y, i) => {
+        const text = customText[Math.floor(Math.random() * customText.length)];
+        const x = i * fontSize;
+        ctx.fillText(text, x, y * fontSize);
+
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      });
+      requestAnimationFrame(drawMatrix);
+    }
+    function fetchIPAndInfo() {
+      fetch("https://api.ipify.org/?format=json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("iplookz").textContent = `MY HEART: ${data.ip}`;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    }
+    startButton.addEventListener("click", () => {
+      startButton.style.display = "none";
+      drawMatrix();
+      fetchIPAndInfo();
+      audio.play().catch(err => console.error("Audio error:", err));
+      player.playVideo();
+    });
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+  </script>
+</body>
+</html>
