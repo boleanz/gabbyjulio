@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create by netoy</title>
+  <title>Create by Netoy</title>
   <style>
     body {
       margin: 0;
       font-family: 'Courier New', Courier, monospace;
       color: #eeff00;
-      background: url('https://media.discordapp.net/attachments/1290359227210006579/1313339086836338738/88B79A9A-8D9E-41FB-896B-193731EA5ADC.jpg') no-repeat center center/cover;
+      background: url('https://media.discordapp.net/attachments/1290359227210006579/1313339086836338738/88B79A9A-8D9E-41FB-896B-193731EA5ADC.jpg?ex=674fc5d6&is=674e7456&hm=350cb27814ae11b7da2b96d71cf17b16c50799243208a5fb27f381c551be5698&=&format=webp&width=1009&height=905') ;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
     }
     canvas {
       position: absolute;
@@ -27,10 +27,9 @@
       z-index: 2;
       text-align: center;
       animation: flicker 2s infinite;
-      padding: 10px;
     }
     h1 {
-      font-size: 1.5rem;
+      font-size: 2rem;
       color: #ffffff;
       text-shadow: 0 0 5px #eeff00, 0 0 10px #eeff00, 0 0 20px #eeff00, 0 0 40px rgb(255, 0, 0), 0 0 80px rgb(255, 0, 0);
       margin: 0;
@@ -51,37 +50,20 @@
       filter: brightness(1.2);
     }
     .social-icons img {
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
     }
-    pre {
-      font-size: 1rem;
-      margin: 0;
-      color: #ffffff;
-      text-shadow: 0 0 5px #eeff00, 0 0 10px #eeff00, 0 0 20px #eeff00, 0 0 40px rgb(255, 0, 0);
-    }
-    #youtube-body {
-      width: 100%;
-      max-width: 560px;
-      aspect-ratio: 16/9;
-      z-index: 2;
-      margin-top: 20px;
-    }
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-      pre {
-        font-size: 1.2rem;
-      }
-      .social-icons img {
-        width: 48px;
-        height: 48px;
-      }
+    @keyframes flicker {
+        0% { opacity: 1; }
+        50% { opacity: 0.2; }
+        100% { opacity: 1; }
     }
     button {
+      position: absolute;
       z-index: 10;
-      padding: 10px 20px;
+      width: 100%;
+      max-width: 99999px;
+      height: 99999px;
       background-color: #eeff00;
       border: none;
       border-radius: 5px;
@@ -93,19 +75,35 @@
       background-color: rgb(255, 0, 0);
       color: #fff;
     }
+    pre {
+      font-size: 1rem;
+      margin: 0;
+      color: #ffffff;
+      text-shadow: 0 0 5px #eeff00, 0 0 10px #eeff00, 0 0 20px #eeff00, 0 0 40px rgb(255, 0, 0);
+    }
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+      button {
+        font-size: 1.2rem;
+      }
+      pre {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <button id="startButton">Love moko?</button>
+  <button id="startButton">Click me my heart</button>
   <canvas id="matrix"></canvas>
-  <canvas id="heartCanvas"></canvas>
   <div class="sinoname">
     <h1>julio "N3toy" loves allyssa "gabby"</h1>
     <div id="youtube-body"></div>
     <audio id="background-audio" src="https://raw.githubusercontent.com/boleanz/boleanz/main/tanginanetoy.mp3" loop></audio>
     <pre id="iplookz" class="iplookz">Fetching...</pre>
     <div class="social-icons">
-      <a href="https://discord.gg/kupalinogang" target="_blank" title="Kupalino Gang">
+      <a href="https://discord.gg/kupalinogang " target="_blank" title="Kupalino Gang">
         <img src="https://img.icons8.com/fluency/48/000000/discord-new-logo.png" alt="Discord">
       </a>
       <a href="https://www.tiktok.com/@user0ri5bta4ia" target="_blank" title="My TikTok">
@@ -128,38 +126,35 @@
           controls: 0,
           modestbranding: 1,
           rel: 0,
-          mute: 0,
+          showinfo: 0,
+          mute: 1,
         },
       });
     }
     const startButton = document.getElementById("startButton");
-    const matrixCanvas = document.getElementById("matrix");
-    const heartCanvas = document.getElementById("heartCanvas");
-    const matrixCtx = matrixCanvas.getContext("2d");
-    const heartCtx = heartCanvas.getContext("2d");
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
     const audio = document.getElementById("background-audio");
     function resizeCanvas() {
-      matrixCanvas.width = window.innerWidth;
-      matrixCanvas.height = window.innerHeight;
-      heartCanvas.width = window.innerWidth;
-      heartCanvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
     resizeCanvas();
     const customText = "I LOVE YOU ALLYSSA ♥";
     const fontSize = 20;
-    let columns = Math.floor(matrixCanvas.width / fontSize);
+    let columns = Math.floor(canvas.width / fontSize);
     let drops = Array(columns).fill(1);
     function drawMatrix() {
-      matrixCtx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-      matrixCtx.fillStyle = "#ffffff";
-      matrixCtx.font = `${fontSize}px monospace`;
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `${fontSize}px monospace`;
       drops.forEach((y, i) => {
         const text = customText[Math.floor(Math.random() * customText.length)];
         const x = i * fontSize;
-        matrixCtx.fillText(text, x, y * fontSize);
+        ctx.fillText(text, x, y * fontSize);
 
-        if (y * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
@@ -176,21 +171,15 @@
         console.error("Error:", error);
       });
     }
-    window.onload = () => {
-      drawMatrix();
-      fetchIPAndInfo();
-      player.playVideo();
-    };
     startButton.addEventListener("click", () => {
       startButton.style.display = "none";
-      audio.play().catch(err => console.error("Audio doesn't load:", err));
-      player.playVideo();
-      player.mute();
-      drawHeart();
+      drawMatrix();
+      fetchIPAndInfo();
+      audio.play().catch(err => console.error("Audio hindi nag load kupal:", err));
     });
     window.addEventListener("resize", () => {
       resizeCanvas();
-      columns = Math.floor(matrixCanvas.width / fontSize);
+      columns = Math.floor(canvas.width / fontSize);
       drops = Array(columns).fill(1);
     });
   </script>
